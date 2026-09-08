@@ -1,0 +1,419 @@
+/**
+ * Angebot Deals — Frontend components
+ * Brand colors intentionally distinct from Groupon's green.
+ */
+
+.angebot-deals-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--angebot-cols, 3), minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.angebot-deals-grid[data-columns="2"] { --angebot-cols: 2; }
+.angebot-deals-grid[data-columns="3"] { --angebot-cols: 3; }
+.angebot-deals-grid[data-columns="4"] { --angebot-cols: 4; }
+
+.angebot-deal-card {
+  background: #fff;
+  border: 1px solid #e6e8ec;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.angebot-deal-card:hover {
+  box-shadow: 0 8px 24px rgba(15, 61, 94, .12);
+  transform: translateY(-2px);
+}
+
+.angebot-deal-card__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #eef1f4;
+}
+
+.angebot-deal-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.angebot-badge {
+  position: absolute;
+  top: .75rem;
+  left: .75rem;
+  background: #e85d04;
+  color: #fff;
+  font-weight: 700;
+  font-size: .85rem;
+  padding: .35rem .55rem;
+  border-radius: 3px;
+  letter-spacing: .02em;
+}
+
+.angebot-deal-card__body {
+  padding: .9rem 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  flex: 1;
+}
+
+.angebot-deal-card__merchant {
+  margin: 0;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: #6b7280;
+}
+
+.angebot-deal-card__title {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+.angebot-deal-card__title a {
+  color: #0f3d5e;
+  text-decoration: none;
+}
+
+.angebot-deal-card__title a:hover {
+  color: #e85d04;
+}
+
+.angebot-deal-card__location,
+.angebot-deal-card__rating,
+.angebot-countdown {
+  margin: 0;
+  font-size: .85rem;
+  color: #4b5563;
+}
+
+.angebot-deal-card__prices {
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+  margin-top: .25rem;
+}
+
+.angebot-price-old {
+  text-decoration: line-through;
+  color: #9ca3af;
+  font-size: .9rem;
+}
+
+.angebot-price-new {
+  color: #e85d04;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.angebot-deal-card__actions {
+  display: flex;
+  gap: .5rem;
+  margin-top: auto;
+  padding-top: .75rem;
+}
+
+.angebot-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 3px;
+  padding: .55rem 1rem;
+  font-weight: 700;
+  font-size: .9rem;
+  text-decoration: none;
+  cursor: pointer;
+  line-height: 1.2;
+}
+
+.angebot-btn--primary {
+  background: #e85d04;
+  color: #fff;
+}
+
+.angebot-btn--primary:hover {
+  background: #d45303;
+  color: #fff;
+}
+
+.angebot-btn--ghost {
+  background: transparent;
+  color: #0f3d5e;
+  border: 1px solid #cfd6de;
+}
+
+.angebot-btn--disabled {
+  background: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.angebot-filters {
+  background: #fff;
+  border: 1px solid #e6e8ec;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.angebot-filters__row {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: .75rem;
+  align-items: end;
+}
+
+.angebot-filters label {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  font-size: .8rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.angebot-filters select,
+.angebot-filters input {
+  border: 1px solid #d1d5db;
+  border-radius: 3px;
+  padding: .5rem .6rem;
+  font: inherit;
+}
+
+.angebot-category-bar {
+  border-bottom: 1px solid #e6e8ec;
+  background: #fff;
+}
+
+.angebot-category-bar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 1rem;
+  display: flex;
+  gap: .25rem;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.angebot-category-bar a {
+  display: block;
+  padding: .85rem .9rem;
+  color: #0f3d5e;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: .9rem;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+}
+
+.angebot-category-bar a:hover,
+.angebot-category-bar a[aria-current="page"] {
+  border-bottom-color: #e85d04;
+  color: #e85d04;
+}
+
+.angebot-location-picker {
+  position: relative;
+}
+
+.angebot-location-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  background: transparent;
+  border: 0;
+  font: inherit;
+  font-weight: 600;
+  color: #0f3d5e;
+  cursor: pointer;
+  padding: .35rem .5rem;
+}
+
+.angebot-loc-icon::before {
+  content: "📍";
+  font-size: .95rem;
+}
+
+.angebot-location-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 40;
+  width: min(280px, 80vw);
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.12);
+  padding: .5rem;
+}
+
+.angebot-location-dropdown ul {
+  list-style: none;
+  margin: .5rem 0 0;
+  padding: 0;
+  max-height: 240px;
+  overflow: auto;
+}
+
+.angebot-location-dropdown button {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  padding: .45rem .55rem;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.angebot-location-dropdown button:hover,
+.angebot-location-dropdown button[aria-current="true"] {
+  background: #fff4ec;
+  color: #e85d04;
+}
+
+.angebot-location-search {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 3px;
+  padding: .45rem .55rem;
+}
+
+.angebot-reviews {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e6e8ec;
+}
+
+.angebot-review {
+  padding: 1rem 0;
+  border-bottom: 1px solid #f0f1f3;
+}
+
+.angebot-review__meta {
+  display: flex;
+  gap: .75rem;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: .9rem;
+  color: #6b7280;
+}
+
+.angebot-stars { color: #e85d04; }
+
+.angebot-review-form {
+  margin-top: 1.5rem;
+  display: grid;
+  gap: .75rem;
+  max-width: 520px;
+}
+
+.angebot-review-form label {
+  display: grid;
+  gap: .3rem;
+  font-weight: 600;
+  font-size: .85rem;
+}
+
+.angebot-review-form input,
+.angebot-review-form textarea,
+.angebot-review-form select {
+  font: inherit;
+  border: 1px solid #d1d5db;
+  border-radius: 3px;
+  padding: .55rem .65rem;
+}
+
+.angebot-voucher-shell {
+  max-width: 420px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: #fff;
+  border: 1px solid #e6e8ec;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.angebot-voucher-code {
+  font-size: 1.6rem;
+  letter-spacing: .12em;
+  font-weight: 800;
+  color: #0f3d5e;
+}
+
+.angebot-voucher-status.status-active { color: #15803d; font-weight: 700; }
+.angebot-voucher-status.status-redeemed { color: #6b7280; font-weight: 700; }
+.angebot-voucher-status.status-expired { color: #b91c1c; font-weight: 700; }
+
+.angebot-merchant-portal {
+  max-width: 560px;
+  margin: 1rem 0;
+}
+
+.angebot-merchant-lookup {
+  display: flex;
+  gap: .75rem;
+  align-items: end;
+  flex-wrap: wrap;
+}
+
+.angebot-merchant-lookup label {
+  flex: 1;
+  display: grid;
+  gap: .35rem;
+  font-weight: 600;
+}
+
+.angebot-merchant-lookup input {
+  padding: .6rem .7rem;
+  border: 1px solid #d1d5db;
+  border-radius: 3px;
+  font: inherit;
+}
+
+.angebot-merchant-result {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #e6e8ec;
+  border-radius: 4px;
+  background: #fafbfc;
+}
+
+.angebot-empty {
+  grid-column: 1 / -1;
+  padding: 2rem;
+  text-align: center;
+  color: #6b7280;
+}
+
+@media (max-width: 960px) {
+  .angebot-deals-grid,
+  .angebot-deals-grid[data-columns="3"],
+  .angebot-deals-grid[data-columns="4"] {
+    --angebot-cols: 2;
+  }
+  .angebot-filters__row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .angebot-deals-grid,
+  .angebot-deals-grid[data-columns="2"],
+  .angebot-deals-grid[data-columns="3"],
+  .angebot-deals-grid[data-columns="4"] {
+    --angebot-cols: 1;
+  }
+  .angebot-filters__row {
+    grid-template-columns: 1fr;
+  }
+}

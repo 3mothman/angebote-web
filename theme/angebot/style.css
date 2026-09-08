@@ -1,0 +1,14 @@
+/*
+Theme Name: Angebot
+Theme URI: https://angebot.local
+Author: Angebot
+Description: Deal-Marktplatz Theme — Layout/Struktur einer lokalen Deals-Plattform mit eigenem Branding (nicht Groupon).
+Version: 1.0.0
+Requires at least: 6.4
+Tested up to: 6.7
+Requires PHP: 8.0
+Text Domain: angebot
+Tags: e-commerce, custom-menu, featured-images, theme-options
+*/
+
+/* Base resets live in assets/css/main.css — WordPress requires style.css header. */
