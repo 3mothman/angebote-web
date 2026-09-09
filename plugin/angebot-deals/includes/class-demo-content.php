@@ -6,8 +6,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Optional demo deals — WP-CLI: wp eval-file wp-content/plugins/angebot-deals/includes/class-demo-content.php
- * Or trigger via Admin → Deals → Einstellungen (button).
+ * Optional demo deals — Admin → Deals → Settings → Seed demo deals.
  */
 final class Angebot_Deals_Demo_Content
 {
@@ -20,52 +19,64 @@ final class Angebot_Deals_Demo_Content
 
         $samples = [
             [
-                'title'    => '3-Gänge-Menü für 2 Personen',
-                'merchant' => 'Bistro Merseburg',
-                'location' => 'merseburg',
-                'category' => 'essen-trinken',
-                'original' => 79.00,
-                'deal'     => 39.00,
+                'title'    => '3-Course Dinner for 2',
+                'merchant' => 'The Ivy Kitchen',
+                'location' => 'london',
+                'category' => 'food-drink',
+                'original' => 89.00,
+                'deal'     => 45.00,
                 'qty'      => 50,
                 'featured' => 1,
-                'excerpt'  => 'Candle-Light-Dinner inkl. Begrüßungsgetränk.',
-                'content'  => '<p>Genießt ein 3-Gänge-Menü nach Wahl der Saisonkarte. Ideal für Paare und besondere Anlässe.</p>',
+                'excerpt'  => 'Seasonal tasting menu with a welcome drink.',
+                'content'  => '<p>Enjoy a 3-course dinner for two from the seasonal menu. Ideal for date nights and celebrations.</p>',
             ],
             [
-                'title'    => '60 Min. Classic Massage',
-                'merchant' => 'Spa Halle',
-                'location' => 'halle',
+                'title'    => '60 Min Classic Massage',
+                'merchant' => 'Northern Spa Manchester',
+                'location' => 'manchester',
                 'category' => 'beauty-wellness',
                 'original' => 65.00,
-                'deal'     => 29.90,
+                'deal'     => 29.00,
                 'qty'      => 40,
                 'featured' => 1,
-                'excerpt'  => 'Entspannung vom Nacken bis zu den Füßen.',
-                'content'  => '<p>Professionelle Ganzkörpermassage mit hochwertigen Ölen. Terminvereinbarung nach Kauf.</p>',
+                'excerpt'  => 'Full-body relaxation with premium oils.',
+                'content'  => '<p>Professional full-body massage. Book your appointment after purchase.</p>',
             ],
             [
-                'title'    => 'Indoor-Trampolin 2 Std.',
-                'merchant' => 'Jump Arena Leipzig',
-                'location' => 'leipzig',
-                'category' => 'freizeit',
+                'title'    => 'Indoor Trampoline — 2 Hours',
+                'merchant' => 'Bounce Birmingham',
+                'location' => 'birmingham',
+                'category' => 'leisure',
                 'original' => 28.00,
                 'deal'     => 14.00,
                 'qty'      => 100,
                 'featured' => 0,
-                'excerpt'  => 'Hüpfen, Softplay & Foam Pit inklusive.',
-                'content'  => '<p>Zwei Stunden Freizeitspaß für Kinder und Erwachsene. Sockenpflicht.</p>',
+                'excerpt'  => 'Jumping, soft play & foam pit included.',
+                'content'  => '<p>Two hours of fun for kids and adults. Grip socks required.</p>',
             ],
             [
-                'title'    => 'Stadtführung Berlin-Mitte',
-                'merchant' => 'Stadtführer Berlin',
-                'location' => 'berlin',
-                'category' => 'aktivitaten',
+                'title'    => 'Edinburgh Old Town Walking Tour',
+                'merchant' => 'Capital Guides',
+                'location' => 'edinburgh',
+                'category' => 'activities',
                 'original' => 25.00,
                 'deal'     => 12.50,
                 'qty'      => 80,
                 'featured' => 1,
-                'excerpt'  => '2 Stunden Highlights rund um den Alex.',
-                'content'  => '<p>Kleine Gruppen, deutschsprachig. Treffpunkt wird nach Kauf mitgeteilt.</p>',
+                'excerpt'  => '2 hours of highlights along the Royal Mile.',
+                'content'  => '<p>Small groups, English-speaking guide. Meeting point shared after purchase.</p>',
+            ],
+            [
+                'title'    => 'Afternoon Tea for Two',
+                'merchant' => 'Bath Tea Rooms',
+                'location' => 'bath',
+                'category' => 'food-drink',
+                'original' => 48.00,
+                'deal'     => 24.00,
+                'qty'      => 60,
+                'featured' => 1,
+                'excerpt'  => 'Sandwiches, scones and a pot of tea.',
+                'content'  => '<p>Classic British afternoon tea for two. Advance booking recommended.</p>',
             ],
         ];
 
@@ -95,17 +106,19 @@ final class Angebot_Deals_Demo_Content
             }
 
             $discount = (int) round((($sample['original'] - $sample['deal']) / $sample['original']) * 100);
+            $label    = ucwords(str_replace('-', ' ', $sample['location']));
+
             update_post_meta($id, '_angebot_original_price', $sample['original']);
             update_post_meta($id, '_angebot_deal_price', $sample['deal']);
             update_post_meta($id, '_angebot_discount_percent', $discount);
             update_post_meta($id, '_angebot_merchant_name', $sample['merchant']);
-            update_post_meta($id, '_angebot_location_label', ucfirst($sample['location']));
+            update_post_meta($id, '_angebot_location_label', $label);
             update_post_meta($id, '_angebot_quantity', $sample['qty']);
             update_post_meta($id, '_angebot_sold_count', 0);
             update_post_meta($id, '_angebot_is_featured', $sample['featured']);
             update_post_meta($id, '_angebot_voucher_expires', gmdate('Y-m-d', strtotime('+90 days')));
-            update_post_meta($id, '_angebot_highlights', "Sofort per E-Mail\nVor Ort einlösbar\nQR-Code inklusive");
-            update_post_meta($id, '_angebot_fine_print', "Nicht mit anderen Rabatten kombinierbar. Terminvereinbarung erforderlich. Keine Barauszahlung.");
+            update_post_meta($id, '_angebot_highlights', "Sent instantly by email\nRedeemable on site\nQR code included");
+            update_post_meta($id, '_angebot_fine_print', "Cannot be combined with other discounts. Appointment required. No cash value.");
 
             $loc = get_term_by('slug', $sample['location'], Angebot_Deals_Deal_CPT::TAX_LOCATION);
             if ($loc) {
@@ -114,7 +127,6 @@ final class Angebot_Deals_Demo_Content
 
             $cat = get_term_by('slug', $sample['category'], Angebot_Deals_Deal_CPT::TAX_CATEGORY);
             if (!$cat) {
-                // Fallback: first matching name fragment.
                 $terms = get_terms(['taxonomy' => Angebot_Deals_Deal_CPT::TAX_CATEGORY, 'hide_empty' => false]);
                 if (!is_wp_error($terms) && $terms) {
                     wp_set_object_terms($id, [(int) $terms[0]->term_id], Angebot_Deals_Deal_CPT::TAX_CATEGORY);

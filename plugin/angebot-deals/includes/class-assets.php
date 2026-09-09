@@ -35,8 +35,8 @@ final class Angebot_Deals_Assets
             'nonce'    => wp_create_nonce('angebot_public'),
             'merchantNonce' => is_user_logged_in() ? wp_create_nonce('angebot_merchant') : '',
             'i18n'     => [
-                'loading' => __('Lädt…', 'angebot-deals'),
-                'error'   => __('Etwas ist schiefgelaufen.', 'angebot-deals'),
+                'loading' => __('Loading…', 'angebot-deals'),
+                'error'   => __('Something went wrong.', 'angebot-deals'),
             ],
         ]);
     }

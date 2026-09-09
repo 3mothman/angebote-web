@@ -23,20 +23,20 @@ final class Angebot_Deals_Legal_Pages
         }
 
         $pages = [
-            'impressum' => [
-                'title'   => 'Impressum',
+            'company-info' => [
+                'title'   => 'Company Information',
                 'content' => self::impressum_content(),
             ],
-            'agb' => [
-                'title'   => 'AGB',
+            'terms' => [
+                'title'   => 'Terms & Conditions',
                 'content' => self::agb_content(),
             ],
-            'widerruf' => [
-                'title'   => 'Widerrufsbelehrung',
+            'cancellation' => [
+                'title'   => 'Cancellation Policy',
                 'content' => self::widerruf_content(),
             ],
-            'datenschutz' => [
-                'title'   => 'Datenschutz',
+            'privacy' => [
+                'title'   => 'Privacy Policy',
                 'content' => self::datenschutz_content(),
             ],
         ];
@@ -66,22 +66,19 @@ final class Angebot_Deals_Legal_Pages
     {
         return <<<HTML
 <!-- wp:paragraph -->
-<p><strong>Angaben gemäß § 5 TMG</strong></p>
+<p><strong>Company information</strong></p>
 <!-- /wp:paragraph -->
 <!-- wp:paragraph -->
-<p>[Firmenname]<br>[Straße Hausnummer]<br>[PLZ Ort]</p>
+<p>[Company Name]<br>[Street Address]<br>[City, Postcode]<br>United Kingdom</p>
 <!-- /wp:paragraph -->
 <!-- wp:paragraph -->
-<p><strong>Vertreten durch:</strong><br>[Vorname Nachname]</p>
+<p><strong>Company number:</strong> [Companies House number]<br><strong>VAT number:</strong> [GB VAT number if registered]</p>
 <!-- /wp:paragraph -->
 <!-- wp:paragraph -->
-<p><strong>Kontakt:</strong><br>Telefon: [Telefon]<br>E-Mail: [E-Mail]</p>
+<p><strong>Contact:</strong><br>Phone: [Phone]<br>Email: [Email]</p>
 <!-- /wp:paragraph -->
 <!-- wp:paragraph -->
-<p><strong>Umsatzsteuer-ID:</strong><br>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: [USt-IdNr.]</p>
-<!-- /wp:paragraph -->
-<!-- wp:paragraph -->
-<p><em>Bitte ersetze die Platzhalter durch deine echten Firmendaten, bevor du live gehst.</em></p>
+<p><em>Replace these placeholders with your real UK company details before going live.</em></p>
 <!-- /wp:paragraph -->
 HTML;
     }
@@ -90,25 +87,25 @@ HTML;
     {
         return <<<HTML
 <!-- wp:heading -->
-<h2>Allgemeine Geschäftsbedingungen</h2>
+<h2>Terms &amp; Conditions</h2>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p>§ 1 Geltungsbereich — Diese AGB gelten für alle Bestellungen von Gutscheinen/Deals über diese Website.</p>
+<p>1. Scope — These terms apply to all purchases of vouchers/deals through this website for customers in the United Kingdom.</p>
 <!-- /wp:paragraph -->
 <!-- wp:paragraph -->
-<p>§ 2 Vertragsschluss — Mit Abschluss der Bestellung kommt ein Kaufvertrag über den Gutschein zustande. Die Leistung des lokalen Anbieters erfolgt nach Einlösung.</p>
+<p>2. Contract — Completing an order creates a purchase contract for the voucher. The local merchant provides the service upon redemption.</p>
 <!-- /wp:paragraph -->
 <!-- wp:paragraph -->
-<p>§ 3 Gutscheine — Jeder Gutschein ist einmalig, personenbezogen übertragbar nach Maßgabe der Deal-Bedingungen und nur bis zum angegebenen Ablaufdatum gültig.</p>
+<p>3. Vouchers — Each voucher is single-use, transferable as stated in the deal terms, and valid only until the stated expiry date.</p>
 <!-- /wp:paragraph -->
 <!-- wp:paragraph -->
-<p>§ 4 Preise & Zahlung — Alle Preise verstehen sich in Euro inkl. gesetzlicher MwSt., sofern ausgewiesen. Zahlung erfolgt über die angebotenen WooCommerce-Zahlungsarten.</p>
+<p>4. Prices &amp; payment — All prices are in British pounds (GBP) including VAT where applicable. Payment is processed via the available WooCommerce payment methods.</p>
 <!-- /wp:paragraph -->
 <!-- wp:paragraph -->
-<p>§ 5 Haftung — Wir vermitteln den Deal; die Durchführung der Leistung obliegt dem jeweiligen Anbieter. Details stehen in der Deal-Beschreibung.</p>
+<p>5. Liability — We broker the deal; fulfilment of the service is the responsibility of the respective merchant. Details are in the deal description.</p>
 <!-- /wp:paragraph -->
 <!-- wp:paragraph -->
-<p><em>Lasse diese AGB vor dem Live-Gang von einem Anwalt prüfen.</em></p>
+<p><em>Have these terms reviewed by a UK solicitor before going live.</em></p>
 <!-- /wp:paragraph -->
 HTML;
     }
@@ -117,19 +114,19 @@ HTML;
     {
         return <<<HTML
 <!-- wp:heading -->
-<h2>Widerrufsbelehrung</h2>
+<h2>Cancellation Policy</h2>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p>Verbraucher haben ein gesetzliches Widerrufsrecht. Bei Gutscheinen für Freizeitleistungen mit festem Termin kann das Widerrufsrecht unter Umständen ausgeschlossen sein (§ 312g Abs. 2 BGB).</p>
+<p>Your rights may include those under the Consumer Contracts Regulations 2013 and the Consumer Rights Act 2015. For leisure services with a specific date or period of performance, the right to cancel may not apply once the service has begun or as otherwise permitted by law.</p>
 <!-- /wp:paragraph -->
 <!-- wp:paragraph -->
-<p><strong>Widerrufsfrist:</strong> 14 Tage ab Vertragsschluss, sofern kein gesetzlicher Ausschluss greift.</p>
+<p><strong>Cooling-off period:</strong> Where a 14-day cooling-off period applies, it runs from the day the contract is concluded, unless a statutory exception applies.</p>
 <!-- /wp:paragraph -->
 <!-- wp:paragraph -->
-<p><strong>Folgen des Widerrufs:</strong> Wir erstatten alle Zahlungen unverzüglich, spätestens binnen 14 Tagen.</p>
+<p><strong>Refunds:</strong> Where you are entitled to cancel, we will refund payments without undue delay, and no later than 14 days after we are informed of the cancellation.</p>
 <!-- /wp:paragraph -->
 <!-- wp:paragraph -->
-<p><em>Passe den Text an dein Geschäftsmodell an und lass ihn rechtlich prüfen. Dies ist eine Vorlage, keine Rechtsberatung.</em></p>
+<p><em>Adapt this text to your business model and have it reviewed by a UK solicitor. This is a template, not legal advice.</em></p>
 <!-- /wp:paragraph -->
 HTML;
     }
@@ -138,19 +135,19 @@ HTML;
     {
         return <<<HTML
 <!-- wp:heading -->
-<h2>Datenschutzerklärung</h2>
+<h2>Privacy Policy</h2>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p>Wir verarbeiten personenbezogene Daten (Name, E-Mail, Bestelldaten, Zahlungsdaten über den Zahlungsdienstleister) zur Vertragserfüllung und Kundenkommunikation.</p>
+<p>We process personal data (name, email, order data, payment data via the payment provider) to fulfil contracts and communicate with customers, in line with UK GDPR and the Data Protection Act 2018.</p>
 <!-- /wp:paragraph -->
 <!-- wp:paragraph -->
-<p>Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertrag) sowie lit. f (berechtigtes Interesse an IT-Sicherheit).</p>
+<p>Legal bases include contract performance and legitimate interests (such as IT security), where applicable.</p>
 <!-- /wp:paragraph -->
 <!-- wp:paragraph -->
-<p>Du hast Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung und Datenübertragbarkeit sowie Beschwerde bei einer Aufsichtsbehörde.</p>
+<p>You have rights of access, rectification, erasure, restriction, and data portability, and the right to complain to the Information Commissioner’s Office (ICO).</p>
 <!-- /wp:paragraph -->
 <!-- wp:paragraph -->
-<p><em>Ergänze Hosting, Cookies, Analytics und Zahlungsanbieter (Stripe/PayPal) vor dem Live-Gang.</em></p>
+<p><em>Add hosting, cookies, analytics, and payment providers (Stripe/PayPal) before going live.</em></p>
 <!-- /wp:paragraph -->
 HTML;
     }

@@ -128,7 +128,7 @@ final class Angebot_Deals_WooCommerce_Sync
             wc_add_notice(
                 sprintf(
                     /* translators: %d: remaining quantity */
-                    __('Nur noch %d Stück dieses Deals verfügbar.', 'angebot-deals'),
+                    __('Only %d of this deal remaining.', 'angebot-deals'),
                     $remaining
                 ),
                 'error'
@@ -150,7 +150,7 @@ final class Angebot_Deals_WooCommerce_Sync
 
             $remaining = Angebot_Deals_Deal_Meta::remaining_quantity($deal_id);
             if ((int) $item['quantity'] > $remaining) {
-                wc_add_notice(__('Ein Deal im Warenkorb ist nicht mehr in der gewünschten Menge verfügbar.', 'angebot-deals'), 'error');
+                wc_add_notice(__('A deal in your cart is no longer available in the requested quantity.', 'angebot-deals'), 'error');
             }
         }
     }

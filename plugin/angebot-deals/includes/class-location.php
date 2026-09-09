@@ -21,14 +21,14 @@ final class Angebot_Deals_Location
         if (!empty($_COOKIE[self::COOKIE])) {
             return sanitize_title(wp_unslash($_COOKIE[self::COOKIE]));
         }
-        return (string) get_option('angebot_default_location', 'berlin');
+        return (string) get_option('angebot_default_location', 'london');
     }
 
     public static function current_label(): string
     {
         $slug = self::current();
         $term = get_term_by('slug', $slug, Angebot_Deals_Deal_CPT::TAX_LOCATION);
-        return $term && !is_wp_error($term) ? $term->name : ucfirst($slug);
+        return $term && !is_wp_error($term) ? $term->name : ucwords(str_replace('-', ' ', $slug));
     }
 
     public static function ajax_set(): void
@@ -47,14 +47,22 @@ final class Angebot_Deals_Location
 
     public static function seed_default_locations(): void
     {
+        // Migration is owned by Angebot_Deals_Setup (uk-en-v2). Keep a light seed for fresh installs.
         if (get_option('angebot_locations_seeded')) {
             return;
         }
+        self::seed_uk_cities_and_categories(false);
+        update_option('angebot_locations_seeded', Angebot_Deals_Setup::SEED_VERSION);
+        update_option('angebot_default_location', 'london');
+    }
 
+    public static function seed_uk_cities_and_categories(bool $force_categories = false): void
+    {
         $cities = [
-            'Berlin', 'Hamburg', 'München', 'Köln', 'Frankfurt', 'Stuttgart',
-            'Düsseldorf', 'Leipzig', 'Dortmund', 'Essen', 'Bremen', 'Dresden',
-            'Hannover', 'Nürnberg', 'Halle', 'Merseburg', 'Magdeburg',
+            'London', 'Manchester', 'Birmingham', 'Leeds', 'Glasgow', 'Liverpool',
+            'Bristol', 'Sheffield', 'Edinburgh', 'Cardiff', 'Belfast', 'Newcastle',
+            'Nottingham', 'Southampton', 'Leicester', 'Brighton', 'Oxford', 'Cambridge',
+            'York', 'Bath',
         ];
 
         foreach ($cities as $city) {
@@ -64,17 +72,16 @@ final class Angebot_Deals_Location
         }
 
         $categories = [
-            'Essen & Trinken', 'Beauty & Wellness', 'Freizeit', 'Reisen',
-            'Aktivitäten', 'Services', 'Shopping', 'Events',
+            'Food & Drink', 'Beauty & Wellness', 'Leisure', 'Travel',
+            'Activities', 'Services', 'Shopping', 'Events',
         ];
 
         foreach ($categories as $cat) {
-            if (!term_exists($cat, Angebot_Deals_Deal_CPT::TAX_CATEGORY)) {
-                wp_insert_term($cat, Angebot_Deals_Deal_CPT::TAX_CATEGORY);
+            if ($force_categories || !term_exists($cat, Angebot_Deals_Deal_CPT::TAX_CATEGORY)) {
+                if (!term_exists($cat, Angebot_Deals_Deal_CPT::TAX_CATEGORY)) {
+                    wp_insert_term($cat, Angebot_Deals_Deal_CPT::TAX_CATEGORY);
+                }
             }
         }
-
-        update_option('angebot_locations_seeded', 1);
-        update_option('angebot_default_location', 'berlin');
     }
 }

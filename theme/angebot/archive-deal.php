@@ -13,7 +13,7 @@ get_header();
             } elseif (is_tax('deal_location')) {
                 printf(esc_html__('Deals in %s', 'angebot'), single_term_title('', false));
             } else {
-                esc_html_e('Alle Deals', 'angebot');
+                esc_html_e('All Deals', 'angebot');
             }
             ?>
         </h1>
@@ -36,7 +36,7 @@ get_header();
                 ?>
             <?php endwhile; ?>
         <?php else : ?>
-            <p class="angebot-empty"><?php esc_html_e('Keine Deals gefunden.', 'angebot'); ?></p>
+            <p class="angebot-empty"><?php esc_html_e('No deals found.', 'angebot'); ?></p>
         <?php endif; ?>
     </div>
 

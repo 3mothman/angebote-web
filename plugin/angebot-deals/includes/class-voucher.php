@@ -251,26 +251,26 @@ final class Angebot_Deals_Voucher
     {
         $voucher = self::get_by_id($voucher_id);
         if (!$voucher) {
-            return ['success' => false, 'message' => __('Gutschein nicht gefunden.', 'angebot-deals')];
+            return ['success' => false, 'message' => __('Voucher not found.', 'angebot-deals')];
         }
 
         $voucher = self::refresh_status($voucher);
 
         if ($voucher->status === self::STATUS_REDEEMED) {
-            return ['success' => false, 'message' => __('Dieser Gutschein wurde bereits eingelöst.', 'angebot-deals')];
+            return ['success' => false, 'message' => __('This voucher has already been redeemed.', 'angebot-deals')];
         }
 
         if ($voucher->status === self::STATUS_EXPIRED) {
-            return ['success' => false, 'message' => __('Dieser Gutschein ist abgelaufen.', 'angebot-deals')];
+            return ['success' => false, 'message' => __('This voucher has expired.', 'angebot-deals')];
         }
 
         if ($voucher->status === self::STATUS_CANCELLED) {
-            return ['success' => false, 'message' => __('Dieser Gutschein ist ungültig.', 'angebot-deals')];
+            return ['success' => false, 'message' => __('This voucher is invalid.', 'angebot-deals')];
         }
 
         if (!user_can($user_id, 'manage_options')) {
             if ((int) $voucher->merchant_user_id !== $user_id) {
-                return ['success' => false, 'message' => __('Keine Berechtigung für diesen Gutschein.', 'angebot-deals')];
+                return ['success' => false, 'message' => __('You do not have permission for this voucher.', 'angebot-deals')];
             }
         }
 
@@ -289,7 +289,7 @@ final class Angebot_Deals_Voucher
 
         return [
             'success' => true,
-            'message' => __('Gutschein erfolgreich eingelöst.', 'angebot-deals'),
+            'message' => __('Voucher redeemed successfully.', 'angebot-deals'),
             'voucher' => self::get_by_id($voucher_id),
         ];
     }
@@ -316,10 +316,10 @@ final class Angebot_Deals_Voucher
     public static function status_label(string $status): string
     {
         $labels = [
-            self::STATUS_ACTIVE    => __('Aktiv', 'angebot-deals'),
-            self::STATUS_REDEEMED  => __('Eingelöst', 'angebot-deals'),
-            self::STATUS_EXPIRED   => __('Abgelaufen', 'angebot-deals'),
-            self::STATUS_CANCELLED => __('Storniert', 'angebot-deals'),
+            self::STATUS_ACTIVE    => __('Active', 'angebot-deals'),
+            self::STATUS_REDEEMED  => __('Redeemed', 'angebot-deals'),
+            self::STATUS_EXPIRED   => __('Expired', 'angebot-deals'),
+            self::STATUS_CANCELLED => __('Cancelled', 'angebot-deals'),
         ];
         return $labels[$status] ?? $status;
     }

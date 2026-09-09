@@ -81,11 +81,11 @@ final class Angebot_Deals_Reviews
         $email   = sanitize_email(wp_unslash($_POST['author_email'] ?? ''));
 
         if (!$deal_id || get_post_type($deal_id) !== Angebot_Deals_Deal_CPT::POST_TYPE) {
-            wp_send_json_error(['message' => __('Ungültiger Deal.', 'angebot-deals')]);
+            wp_send_json_error(['message' => __('Invalid deal.', 'angebot-deals')]);
         }
 
         if ($rating < 1 || $rating > 5 || $content === '' || $name === '') {
-            wp_send_json_error(['message' => __('Bitte Bewertung, Name und Text ausfüllen.', 'angebot-deals')]);
+            wp_send_json_error(['message' => __('Please fill in rating, name, and review text.', 'angebot-deals')]);
         }
 
         global $wpdb;
@@ -106,7 +106,7 @@ final class Angebot_Deals_Reviews
         );
 
         wp_send_json_success([
-            'message' => __('Danke! Deine Bewertung wird geprüft.', 'angebot-deals'),
+            'message' => __('Thanks! Your review is pending approval.', 'angebot-deals'),
         ]);
     }
 
@@ -114,8 +114,8 @@ final class Angebot_Deals_Reviews
     {
         add_submenu_page(
             'edit.php?post_type=deal',
-            __('Bewertungen', 'angebot-deals'),
-            __('Bewertungen', 'angebot-deals'),
+            __('Reviews', 'angebot-deals'),
+            __('Reviews', 'angebot-deals'),
             'manage_options',
             'angebot-reviews',
             [self::class, 'render_admin']
@@ -129,12 +129,12 @@ final class Angebot_Deals_Reviews
 
         if (isset($_GET['approve'], $_GET['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), 'angebot_review')) {
             $wpdb->update($table, ['status' => 'approved'], ['id' => absint($_GET['approve'])], ['%s'], ['%d']);
-            echo '<div class="notice notice-success"><p>' . esc_html__('Freigegeben.', 'angebot-deals') . '</p></div>';
+            echo '<div class="notice notice-success"><p>' . esc_html__('Approved.', 'angebot-deals') . '</p></div>';
         }
 
         if (isset($_GET['trash'], $_GET['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), 'angebot_review')) {
             $wpdb->delete($table, ['id' => absint($_GET['trash'])], ['%d']);
-            echo '<div class="notice notice-success"><p>' . esc_html__('Gelöscht.', 'angebot-deals') . '</p></div>';
+            echo '<div class="notice notice-success"><p>' . esc_html__('Deleted.', 'angebot-deals') . '</p></div>';
         }
 
         $reviews = $wpdb->get_results("SELECT * FROM {$table} ORDER BY created_at DESC LIMIT 100");

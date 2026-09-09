@@ -17,7 +17,7 @@
     const res = await fetch(cfg.ajaxUrl, { method: 'POST', body: body, credentials: 'same-origin' });
     const json = await res.json();
     if (!json.success) {
-      result.innerHTML = '<p style="color:#b32d2e">' + (json.data?.message || 'Fehler') + '</p>';
+      result.innerHTML = '<p style="color:#b32d2e">' + (json.data?.message || 'Error') + '</p>';
       redeemBtn.disabled = true;
       currentId = null;
       return;
@@ -27,8 +27,8 @@
     redeemBtn.disabled = !d.can_redeem;
     result.innerHTML =
       '<p><strong>' + d.deal_title + '</strong><br>Status: ' + d.status_label +
-      '<br>Kunde: ' + d.customer +
-      (d.expires_at ? '<br>Ablauf: ' + d.expires_at : '') + '</p>';
+      '<br>Customer: ' + d.customer +
+      (d.expires_at ? '<br>Expires: ' + d.expires_at : '') + '</p>';
   });
 
   redeemBtn?.addEventListener('click', async function () {

@@ -18,7 +18,7 @@ final class Angebot_Deals_Admin
     public static function handle_seed_demo(): void
     {
         if (!current_user_can('manage_options')) {
-            wp_die(esc_html__('Keine Berechtigung.', 'angebot-deals'));
+            wp_die(esc_html__('Permission denied.', 'angebot-deals'));
         }
         check_admin_referer('angebot_seed_demo');
         $created = Angebot_Deals_Demo_Content::seed();
@@ -34,8 +34,8 @@ final class Angebot_Deals_Admin
     {
         add_submenu_page(
             'edit.php?post_type=deal',
-            __('Einstellungen', 'angebot-deals'),
-            __('Einstellungen', 'angebot-deals'),
+            __('Settings', 'angebot-deals'),
+            __('Settings', 'angebot-deals'),
             'manage_options',
             'angebot-settings',
             [self::class, 'render_settings']
@@ -47,7 +47,7 @@ final class Angebot_Deals_Admin
         register_setting('angebot_deals', 'angebot_default_location', [
             'type'              => 'string',
             'sanitize_callback' => 'sanitize_title',
-            'default'           => 'berlin',
+            'default'           => 'london',
         ]);
         register_setting('angebot_deals', 'angebot_brand_name', [
             'type'              => 'string',
@@ -60,42 +60,43 @@ final class Angebot_Deals_Admin
     {
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Angebot Deals — Einstellungen', 'angebot-deals'); ?></h1>
+            <h1><?php esc_html_e('Angebot Deals — Settings', 'angebot-deals'); ?></h1>
             <form method="post" action="options.php">
                 <?php settings_fields('angebot_deals'); ?>
                 <table class="form-table">
                     <tr>
-                        <th><label for="angebot_brand_name"><?php esc_html_e('Markenname', 'angebot-deals'); ?></label></th>
+                        <th><label for="angebot_brand_name"><?php esc_html_e('Brand name', 'angebot-deals'); ?></label></th>
                         <td>
                             <input type="text" class="regular-text" id="angebot_brand_name" name="angebot_brand_name" value="<?php echo esc_attr((string) get_option('angebot_brand_name', 'Angebot')); ?>">
-                            <p class="description"><?php esc_html_e('Eigener Name — nicht „Groupon“ verwenden.', 'angebot-deals'); ?></p>
+                            <p class="description"><?php esc_html_e('Your own brand name — do not use “Groupon”.', 'angebot-deals'); ?></p>
                         </td>
                     </tr>
                     <tr>
-                        <th><label for="angebot_default_location"><?php esc_html_e('Standard-Standort (Slug)', 'angebot-deals'); ?></label></th>
+                        <th><label for="angebot_default_location"><?php esc_html_e('Default city (slug)', 'angebot-deals'); ?></label></th>
                         <td>
-                            <input type="text" class="regular-text" id="angebot_default_location" name="angebot_default_location" value="<?php echo esc_attr((string) get_option('angebot_default_location', 'berlin')); ?>">
+                            <input type="text" class="regular-text" id="angebot_default_location" name="angebot_default_location" value="<?php echo esc_attr((string) get_option('angebot_default_location', 'london')); ?>">
+                            <p class="description"><?php esc_html_e('e.g. london, manchester, birmingham', 'angebot-deals'); ?></p>
                         </td>
                     </tr>
                 </table>
                 <?php submit_button(); ?>
             </form>
             <hr>
-            <h2><?php esc_html_e('Demo-Inhalte', 'angebot-deals'); ?></h2>
+            <h2><?php esc_html_e('Demo content', 'angebot-deals'); ?></h2>
             <?php if (isset($_GET['demo_seeded'])) : ?>
                 <div class="notice notice-success"><p>
-                    <?php printf(esc_html__('%d Demo-Deals angelegt.', 'angebot-deals'), absint($_GET['demo_seeded'])); ?>
+                    <?php printf(esc_html__('%d demo deals created.', 'angebot-deals'), absint($_GET['demo_seeded'])); ?>
                 </p></div>
             <?php endif; ?>
-            <p><?php esc_html_e('Legt ein paar Beispiel-Deals an (Berlin, Halle, Leipzig, Merseburg), damit du Design & Checkout sofort testen kannst.', 'angebot-deals'); ?></p>
+            <p><?php esc_html_e('Creates sample deals in London, Manchester, Birmingham, Edinburgh and Bath so you can test design & checkout.', 'angebot-deals'); ?></p>
             <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
                 <input type="hidden" name="action" value="angebot_seed_demo">
                 <?php wp_nonce_field('angebot_seed_demo'); ?>
-                <?php submit_button(__('Demo-Deals anlegen', 'angebot-deals'), 'secondary', 'submit', false); ?>
+                <?php submit_button(__('Create demo deals', 'angebot-deals'), 'secondary', 'submit', false); ?>
             </form>
             <hr>
-            <h2><?php esc_html_e('Zahlungen (Stripe / PayPal)', 'angebot-deals'); ?></h2>
-            <p><?php esc_html_e('Aktiviere in WooCommerce → Einstellungen → Zahlungen die Plugins „WooCommerce Stripe Gateway“ und/oder „WooCommerce PayPal Payments“. Testmodus dort deaktivieren, sobald Live-Keys hinterlegt sind.', 'angebot-deals'); ?></p>
+            <h2><?php esc_html_e('Payments (Stripe / PayPal)', 'angebot-deals'); ?></h2>
+            <p><?php esc_html_e('In WooCommerce → Settings → Payments, enable the “WooCommerce Stripe Gateway” and/or “WooCommerce PayPal Payments” plugins. Disable test mode there once live keys are set.', 'angebot-deals'); ?></p>
         </div>
         <?php
     }
@@ -103,7 +104,7 @@ final class Angebot_Deals_Admin
     public static function product_state(array $states, WP_Post $post): array
     {
         if ($post->post_type === 'product' && get_post_meta($post->ID, '_angebot_is_deal_product', true) === 'yes') {
-            $states['angebot_deal'] = __('Deal-Produkt (versteckt)', 'angebot-deals');
+            $states['angebot_deal'] = __('Deal product (hidden)', 'angebot-deals');
         }
         return $states;
     }

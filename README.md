@@ -1,89 +1,94 @@
-# Angebot — Lokale Deals-Plattform
+# Angebot — Local Deals Platform
 
-WordPress-Plugin + Theme für eine Groupon-ähnliche Deals-Website mit **eigenem Branding** (Markenname, Logo, Farben). Layout und Funktionsweise orientieren sich an groupon.de — Markenrechte von Groupon werden bewusst nicht übernommen.
+WordPress plugin + theme for a Groupon-style deals site with **its own branding** (brand name, logo, colors). Layout and UX follow common local-deals patterns (e.g. groupon.de-style flows) without copying Groupon’s trademarks.
 
 ## Stack
 
 - WordPress 6.4+
 - WooCommerce 8+
-- Custom Plugin `angebot-deals` (PHP 8, OOP)
-- Custom Theme `angebot`
-- Hosting: Hostinger (oder jedes WP-Hosting)
+- Custom plugin `angebot-deals` (PHP 8, OOP)
+- Custom theme `angebot`
+- Hosting: Hostinger (or any WordPress host)
 
 ## Installation (Hostinger)
 
-1. WordPress + WooCommerce installieren.
-2. Ordner kopieren:
+1. Install WordPress + WooCommerce.
+2. Copy folders:
    - `plugin/angebot-deals` → `wp-content/plugins/angebot-deals`
    - `theme/angebot` → `wp-content/themes/angebot`
-3. Plugin **Angebot Deals** aktivieren, Theme **Angebot** aktivieren.
-4. Unter **Einstellungen → Permalinks** einmal speichern (Rewrite-Rules).
-5. WooCommerce-Setup (Währung EUR, Standort DE) durchlaufen.
-6. Zahlungen: **WooCommerce Stripe Gateway** und/oder **PayPal Payments** installieren, Live-Keys hinterlegen, Testmodus aus.
-7. Optional: **Deals → Einstellungen → Demo-Deals anlegen**.
-8. Rechtliche Seiten (`/impressum`, `/agb`, `/widerruf`, `/datenschutz`) öffnen und Platzhalter durch echte Firmendaten ersetzen — idealerweise anwaltlich prüfen lassen.
-9. Eigenes Logo unter **Design → Customizer → Logo** hochladen. Markenname unter **Deals → Einstellungen**.
+3. Activate the **Angebot Deals** plugin and the **Angebot** theme.
+4. Open **Settings → Permalinks** and save once (flush rewrite rules).
+5. Complete WooCommerce setup (**currency GBP £**, store address in the UK).
+6. Set **Settings → General → Site Language** to **English (UK)** — required so WordPress menus/admin are fully English (not German).
+7. Payments: install **WooCommerce Stripe Gateway** and/or **PayPal Payments**, add live keys, turn off test mode when going live.
+8. Optional: **Deals → Settings → Create demo deals** (London, Manchester, Birmingham, Edinburgh, Bath).
+9. Open legal pages (`/company-info`, `/terms`, `/cancellation`, `/privacy`) and replace placeholders with real UK company details — ideally have a solicitor review them.
+10. Upload your logo under **Appearance → Customizer → Logo**. Set the brand name under **Deals → Settings**.
 
-## Was das Plugin kann
+On first load the plugin migrates old German cities/categories to English UK cities, creates an English **Main Menu** (Home, All Deals, categories), and prefers `en_GB` locale.
+
+Default city is **London**. Seeded UK cities include London, Manchester, Birmingham, Leeds, Glasgow, Liverpool, Bristol, Sheffield, Edinburgh, Cardiff, Belfast, Newcastle, Nottingham, Southampton, Leicester, Brighton, Oxford, Cambridge, York, and Bath.
+
+## Plugin features
 
 | Feature | Status |
 |--------|--------|
-| CPT `deal` + Kategorien + Standorte | ✅ |
-| Meta: Preise, Rabatt, Merchant, Kontingent, Ablauf | ✅ |
-| Auto WooCommerce-Produkt (versteckt) | ✅ |
-| Checkout über WooCommerce | ✅ |
-| Gutschein-Tabelle + E-Mail inkl. QR | ✅ |
-| Merchant-Rolle + Einlösen (Admin & Frontend) | ✅ |
-| Filter (Kategorie, Stadt, Preis) + Standort-Cookie | ✅ |
-| Bewertungen mit Moderation | ✅ |
-| Rechtliche Seiten (Vorlagen DE) | ✅ |
-| Demo-Deals | ✅ |
+| CPT `deal` + categories + locations | ✅ |
+| Meta: prices, discount, merchant, stock, expiry | ✅ |
+| Auto WooCommerce product (hidden) | ✅ |
+| Checkout via WooCommerce | ✅ |
+| Voucher table + email with QR | ✅ |
+| Merchant role + redeem (admin & frontend) | ✅ |
+| Filters (category, city, price) + location cookie | ✅ |
+| Reviews with moderation | ✅ |
+| Legal pages (English templates) | ✅ |
+| Demo deals | ✅ |
 
 ### Shortcodes
 
-- `[deals_grid]` / `[angebot_deals]` — Deal-Grid (optional `show_filters="1"`)
-- `[angebot_featured]` — Highlight-Deals
-- `[angebot_filters]` — Filterleiste
-- `[angebot_location_picker]` — Stadtauswahl
-- `[angebot_categories]` — Kategorieleiste
-- `[angebot_reviews]` — Bewertungen (Deal-Detail)
-- `[angebot_merchant_portal]` — Einlösen für Anbieter
+- `[deals_grid]` / `[angebot_deals]` — deal grid (optional `show_filters="1"`)
+- `[angebot_featured]` — featured deals
+- `[angebot_filters]` — filter bar
+- `[angebot_location_picker]` — city picker
+- `[angebot_categories]` — category bar
+- `[angebot_reviews]` — reviews (deal detail)
+- `[angebot_merchant_portal]` — redeem UI for merchants
 
-### Merchant-Workflow
+### Merchant workflow
 
-1. Benutzer mit Rolle **Anbieter / Merchant** anlegen.
-2. Beim Deal unter „Merchant-Benutzer“ zuweisen.
-3. Anbieter sieht nur eigene Deals und kann unter **Gutscheine** oder Seite mit `[angebot_merchant_portal]` Codes/QR einlösen.
-4. QR öffnet `/gutschein/{token}/` — eingeloggte Merchants können dort direkt freigeben.
+1. Create a user with the **Merchant** role.
+2. Assign them on the deal under “Merchant user”.
+3. Merchants only see their own deals and can redeem codes/QR under **Vouchers** or a page with `[angebot_merchant_portal]`.
+4. QR opens `/voucher/{token}/` — logged-in merchants can approve redemption there.
 
-## Branding (wichtig)
+## Branding (important)
 
-- **Nicht** „Groupon“ als Namen, Logo oder Domain nutzen.
-- Farben sind bewusst **Navy + Coral** (nicht Groupon-Grün).
-- Layout/UX (Header, Karten, Buy-Box, Footer-Städte) darf sich am Marktstandard orientieren.
+- Do **not** use “Groupon” as a name, logo, or domain.
+- Colors are intentionally **navy + coral** (not Groupon green).
+- Layout/UX (header, cards, buy box, footer cities) may follow marketplace conventions.
 
-## Empfohlene Live-Checkliste Deutschland
+## Recommended live checklist
 
-- [ ] Impressum, AGB, Widerruf, Datenschutz final
-- [ ] Stripe/PayPal Live
+- [ ] Imprint, terms, cancellation, and privacy finalized
+- [ ] Stripe/PayPal live
 - [ ] SSL (Hostinger)
-- [ ] E-Mail-Zustellung testen (SMTP-Plugin empfohlen)
-- [ ] Ersten Testkauf inkl. Gutschein-Mail und Einlösung
-- [ ] Markenname + Logo final
-- [ ] Steuer/USt-Einstellungen in WooCommerce
+- [ ] Test email delivery (SMTP plugin recommended)
+- [ ] First test purchase including voucher email and redemption
+- [ ] Brand name + logo finalized
+- [ ] Tax/VAT settings in WooCommerce
 
-## Projektstruktur
+## Project structure
 
 ```
 angebot-web/
-├── plugin/angebot-deals/     # Custom Plugin
-└── theme/angebot/            # Frontend Theme
+├── plugin/angebot-deals/     # Custom plugin
+└── theme/angebot/            # Frontend theme
 ```
 
-## Hinweise zur Weiterentwicklung
+## Notes for further development
 
-- Bewertungen starten im Status `pending` (Admin freigeben).
-- QR-Bilder kommen von `api.qrserver.com` (E-Mail/Frontend). Für Offline/DSGVO-strikt: lokale QR-Lib ergänzen.
-- n8n: Webhook an `woocommerce_order_status_completed` oder Custom-Action `angebot_deals_vouchers_created` anbinden.
+- Reviews start as `pending` (admin must approve).
+- QR images come from `api.qrserver.com` (email/frontend). For offline / stricter privacy: add a local QR library.
+- n8n: hook a webhook to `woocommerce_order_status_completed` or the custom action `angebot_deals_vouchers_created`.
 
-Kein Rechtsberatung — Vorlagen ersetzen keine anwaltliche Prüfung.
+Not legal advice — templates do not replace a lawyer’s review.

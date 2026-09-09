@@ -61,7 +61,7 @@ while (have_posts()) :
 
                 <?php if (!empty($data['fine_print'])) : ?>
                     <details class="deal-fineprint">
-                        <summary><?php esc_html_e('Bedingungen & Kleingedrucktes', 'angebot'); ?></summary>
+                        <summary><?php esc_html_e('Terms & fine print', 'angebot'); ?></summary>
                         <div><?php echo nl2br(esc_html((string) $data['fine_print'])); ?></div>
                     </details>
                 <?php endif; ?>
@@ -81,32 +81,32 @@ while (have_posts()) :
                     </div>
                     <?php if (!empty($data['discount_percent'])) : ?>
                         <p class="buybox__save">
-                            <?php printf(esc_html__('Du sparst %d%%', 'angebot'), (int) $data['discount_percent']); ?>
+                            <?php printf(esc_html__('You save %d%%', 'angebot'), (int) $data['discount_percent']); ?>
                         </p>
                     <?php endif; ?>
 
                     <?php if (!empty($data['voucher_expires'])) : ?>
                         <p class="angebot-countdown" data-expires="<?php echo esc_attr((string) $data['voucher_expires']); ?>T23:59:59">
-                            <?php esc_html_e('Gutschein gültig bis Ablauf in', 'angebot'); ?>
+                            <?php esc_html_e('Voucher valid — expires in', 'angebot'); ?>
                             <span class="angebot-countdown__time">—</span>
                         </p>
                     <?php endif; ?>
 
                     <?php if ($remaining < PHP_INT_MAX) : ?>
                         <p class="buybox__stock">
-                            <?php printf(esc_html__('Noch %d verfügbar', 'angebot'), (int) $remaining); ?>
+                            <?php printf(esc_html__('%d left', 'angebot'), (int) $remaining); ?>
                         </p>
                     <?php endif; ?>
 
                     <?php if ($remaining > 0 && $product_id) : ?>
                         <a class="angebot-btn angebot-btn--primary buybox__cta" href="<?php echo esc_url(angebot_deal_buy_url($deal_id)); ?>">
-                            <?php esc_html_e('Jetzt kaufen', 'angebot'); ?>
+                            <?php esc_html_e('Buy now', 'angebot'); ?>
                         </a>
                     <?php else : ?>
-                        <span class="angebot-btn angebot-btn--disabled buybox__cta"><?php esc_html_e('Ausverkauft', 'angebot'); ?></span>
+                        <span class="angebot-btn angebot-btn--disabled buybox__cta"><?php esc_html_e('Sold out', 'angebot'); ?></span>
                     <?php endif; ?>
 
-                    <p class="buybox__note"><?php esc_html_e('Nach dem Kauf erhältst du deinen Gutschein per E-Mail — inkl. QR-Code.', 'angebot'); ?></p>
+                    <p class="buybox__note"><?php esc_html_e('After purchase you will receive your voucher by email — including a QR code.', 'angebot'); ?></p>
                 </div>
             </aside>
         </div>

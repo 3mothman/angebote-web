@@ -27,6 +27,7 @@ final class Angebot_Deals_Autoloader
         'Angebot_Deals_Location'         => 'class-location.php',
         'Angebot_Deals_Admin'            => 'class-admin.php',
         'Angebot_Deals_Demo_Content'     => 'class-demo-content.php',
+        'Angebot_Deals_Setup'            => 'class-setup.php',
     ];
 
     public static function register(): void

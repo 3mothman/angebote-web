@@ -18,8 +18,8 @@ final class Angebot_Deals_Merchant_Portal
     public static function admin_menu(): void
     {
         add_menu_page(
-            __('Gutscheine einlösen', 'angebot-deals'),
-            __('Gutscheine', 'angebot-deals'),
+            __('Redeem vouchers', 'angebot-deals'),
+            __('Vouchers', 'angebot-deals'),
             'angebot_redeem_voucher',
             'angebot-vouchers',
             [self::class, 'render_admin_page'],
@@ -31,7 +31,7 @@ final class Angebot_Deals_Merchant_Portal
     public static function render_admin_page(): void
     {
         if (!current_user_can('angebot_redeem_voucher')) {
-            wp_die(esc_html__('Keine Berechtigung.', 'angebot-deals'));
+            wp_die(esc_html__('Permission denied.', 'angebot-deals'));
         }
 
         $user_id  = get_current_user_id();
@@ -70,7 +70,7 @@ final class Angebot_Deals_Merchant_Portal
     public static function shortcode(): string
     {
         if (!is_user_logged_in() || !current_user_can('angebot_redeem_voucher')) {
-            return '<p>' . esc_html__('Bitte als Anbieter einloggen, um Gutscheine einzulösen.', 'angebot-deals') . '</p>';
+            return '<p>' . esc_html__('Please log in as a merchant to redeem vouchers.', 'angebot-deals') . '</p>';
         }
 
         ob_start();
@@ -83,7 +83,7 @@ final class Angebot_Deals_Merchant_Portal
         check_ajax_referer('angebot_merchant', 'nonce');
 
         if (!current_user_can('angebot_redeem_voucher')) {
-            wp_send_json_error(['message' => __('Keine Berechtigung.', 'angebot-deals')], 403);
+            wp_send_json_error(['message' => __('Permission denied.', 'angebot-deals')], 403);
         }
 
         $code  = isset($_POST['code']) ? sanitize_text_field(wp_unslash($_POST['code'])) : '';
@@ -94,13 +94,13 @@ final class Angebot_Deals_Merchant_Portal
             : Angebot_Deals_Voucher::get_by_code($code);
 
         if (!$voucher) {
-            wp_send_json_error(['message' => __('Gutschein nicht gefunden.', 'angebot-deals')]);
+            wp_send_json_error(['message' => __('Voucher not found.', 'angebot-deals')]);
         }
 
         $voucher = Angebot_Deals_Voucher::refresh_status($voucher);
 
         if (!current_user_can('manage_options') && (int) $voucher->merchant_user_id !== get_current_user_id()) {
-            wp_send_json_error(['message' => __('Dieser Gutschein gehört nicht zu deinen Deals.', 'angebot-deals')]);
+            wp_send_json_error(['message' => __('This voucher does not belong to your deals.', 'angebot-deals')]);
         }
 
         wp_send_json_success([
@@ -110,7 +110,7 @@ final class Angebot_Deals_Merchant_Portal
             'status_label'  => Angebot_Deals_Voucher::status_label($voucher->status),
             'deal_title'    => get_the_title((int) $voucher->deal_id),
             'customer'      => $voucher->customer_name ?: $voucher->customer_email,
-            'expires_at'    => $voucher->expires_at ? date_i18n('d.m.Y', strtotime($voucher->expires_at)) : '',
+            'expires_at'    => $voucher->expires_at ? date_i18n('d/m/Y', strtotime($voucher->expires_at)) : '',
             'can_redeem'    => $voucher->status === Angebot_Deals_Voucher::STATUS_ACTIVE,
         ]);
     }
@@ -120,7 +120,7 @@ final class Angebot_Deals_Merchant_Portal
         check_ajax_referer('angebot_merchant', 'nonce');
 
         if (!current_user_can('angebot_redeem_voucher')) {
-            wp_send_json_error(['message' => __('Keine Berechtigung.', 'angebot-deals')], 403);
+            wp_send_json_error(['message' => __('Permission denied.', 'angebot-deals')], 403);
         }
 
         $id = absint($_POST['voucher_id'] ?? 0);

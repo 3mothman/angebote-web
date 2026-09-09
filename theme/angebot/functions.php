@@ -21,9 +21,9 @@ add_action('after_setup_theme', static function (): void {
     ]);
 
     register_nav_menus([
-        'primary' => __('Hauptmenü', 'angebot'),
-        'footer'  => __('Footer-Menü', 'angebot'),
-        'legal'   => __('Rechtliches', 'angebot'),
+        'primary' => __('Primary Menu', 'angebot'),
+        'footer'  => __('Footer Menu', 'angebot'),
+        'legal'   => __('Legal Menu', 'angebot'),
     ]);
 
     add_image_size('angebot-deal', 640, 400, true);
@@ -76,6 +76,21 @@ function angebot_cart_count(): int
         return 0;
     }
     return (int) WC()->cart->get_cart_contents_count();
+}
+
+/**
+ * English fallback: Home + All Deals only (categories live in the category bar).
+ */
+function angebot_fallback_primary_menu(): void
+{
+    echo '<nav class="primary-nav"><ul class="menu">';
+    printf('<li><a href="%s">%s</a></li>', esc_url(home_url('/')), esc_html__('Home', 'angebot'));
+    printf(
+        '<li><a href="%s">%s</a></li>',
+        esc_url(get_post_type_archive_link('deal') ?: home_url('/deals/')),
+        esc_html__('All Deals', 'angebot')
+    );
+    echo '</ul></nav>';
 }
 
 require_once get_template_directory() . '/inc/template-tags.php';

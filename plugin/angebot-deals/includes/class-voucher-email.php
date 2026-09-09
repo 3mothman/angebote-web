@@ -22,7 +22,7 @@ final class Angebot_Deals_Voucher_Email
         $to      = $order->get_billing_email();
         $subject = sprintf(
             /* translators: %s: site name */
-            __('[%s] Deine Gutscheine', 'angebot-deals'),
+            __('[%s] Your vouchers', 'angebot-deals'),
             wp_specialchars_decode(get_bloginfo('name'), ENT_QUOTES)
         );
 
@@ -40,7 +40,7 @@ final class Angebot_Deals_Voucher_Email
         ob_start();
         ?>
         <!DOCTYPE html>
-        <html lang="de">
+        <html lang="en">
         <head><meta charset="UTF-8"><title><?php echo $site; ?></title></head>
         <body style="font-family:Arial,sans-serif;background:#f5f6f8;padding:24px;color:#1a1a1a">
             <table width="100%" cellpadding="0" cellspacing="0" style="max-width:640px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden">
@@ -51,8 +51,8 @@ final class Angebot_Deals_Voucher_Email
                 </tr>
                 <tr>
                     <td style="padding:24px">
-                        <p><?php printf(esc_html__('Hallo %s,', 'angebot-deals'), $name); ?></p>
-                        <p><?php esc_html_e('vielen Dank für deinen Kauf! Hier sind deine Gutscheine:', 'angebot-deals'); ?></p>
+                        <p><?php printf(esc_html__('Hi %s,', 'angebot-deals'), $name); ?></p>
+                        <p><?php esc_html_e('Thank you for your purchase! Here are your vouchers:', 'angebot-deals'); ?></p>
                         <?php foreach ($vouchers as $voucher) :
                             $deal_title = get_the_title((int) $voucher->deal_id);
                             $qr_url     = Angebot_Deals_QR_Code::image_url((string) $voucher->qr_token);
@@ -62,17 +62,17 @@ final class Angebot_Deals_Voucher_Email
                                 <p style="margin:0 0 8px;font-size:20px;letter-spacing:2px;font-weight:700"><?php echo esc_html($voucher->code); ?></p>
                                 <?php if ($voucher->expires_at) : ?>
                                     <p style="margin:0 0 12px;color:#666;font-size:13px">
-                                        <?php printf(esc_html__('Gültig bis: %s', 'angebot-deals'), esc_html(date_i18n('d.m.Y', strtotime($voucher->expires_at)))); ?>
+                                        <?php printf(esc_html__('Valid until: %s', 'angebot-deals'), esc_html(date_i18n('d/m/Y', strtotime($voucher->expires_at)))); ?>
                                     </p>
                                 <?php endif; ?>
                                 <img src="<?php echo esc_url($qr_url); ?>" alt="QR" width="160" height="160" style="display:block">
                                 <p style="margin:8px 0 0;font-size:12px;color:#888">
-                                    <?php esc_html_e('Zeig diesen QR-Code oder den Textcode beim Anbieter vor.', 'angebot-deals'); ?>
+                                    <?php esc_html_e('Show this QR code or the text code to the merchant.', 'angebot-deals'); ?>
                                 </p>
                             </div>
                         <?php endforeach; ?>
                         <p style="font-size:13px;color:#666">
-                            <?php printf(esc_html__('Bestellnummer: #%s', 'angebot-deals'), esc_html((string) $order->get_order_number())); ?>
+                            <?php printf(esc_html__('Order number: #%s', 'angebot-deals'), esc_html((string) $order->get_order_number())); ?>
                         </p>
                     </td>
                 </tr>
@@ -95,14 +95,14 @@ final class Angebot_Deals_Voucher_Email
         }
 
         if ($plain_text) {
-            echo "\n" . __('Deine Gutscheine:', 'angebot-deals') . "\n";
+            echo "\n" . __('Your vouchers:', 'angebot-deals') . "\n";
             foreach ($vouchers as $v) {
                 echo '- ' . $v->code . ' (' . get_the_title((int) $v->deal_id) . ")\n";
             }
             return;
         }
 
-        echo '<h2>' . esc_html__('Deine Gutscheine', 'angebot-deals') . '</h2>';
+        echo '<h2>' . esc_html__('Your vouchers', 'angebot-deals') . '</h2>';
         echo '<ul>';
         foreach ($vouchers as $v) {
             printf(

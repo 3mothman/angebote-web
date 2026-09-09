@@ -43,7 +43,7 @@ final class Angebot_Deals_Shortcodes
             }
             wp_reset_postdata();
         } else {
-            echo '<p class="angebot-empty">' . esc_html__('Keine Deals in dieser Auswahl gefunden.', 'angebot-deals') . '</p>';
+            echo '<p class="angebot-empty">' . esc_html__('No deals found for this selection.', 'angebot-deals') . '</p>';
         }
         echo '</div>';
         return (string) ob_get_clean();
@@ -91,7 +91,7 @@ final class Angebot_Deals_Shortcodes
                 <span class="angebot-loc-label"><?php echo esc_html(Angebot_Deals_Location::current_label()); ?></span>
             </button>
             <div class="angebot-location-dropdown" hidden>
-                <input type="search" class="angebot-location-search" placeholder="<?php esc_attr_e('Stadt suchen…', 'angebot-deals'); ?>">
+                <input type="search" class="angebot-location-search" placeholder="<?php esc_attr_e('Search city…', 'angebot-deals'); ?>">
                 <ul role="listbox">
                     <?php if (!is_wp_error($locations)) : foreach ($locations as $loc) : ?>
                         <li>
@@ -120,8 +120,8 @@ final class Angebot_Deals_Shortcodes
         }
 
         ob_start();
-        echo '<nav class="angebot-category-bar" aria-label="' . esc_attr__('Kategorien', 'angebot-deals') . '"><ul>';
-        echo '<li><a href="' . esc_url(get_post_type_archive_link(Angebot_Deals_Deal_CPT::POST_TYPE)) . '">' . esc_html__('Alle', 'angebot-deals') . '</a></li>';
+        echo '<nav class="angebot-category-bar" aria-label="' . esc_attr__('Categories', 'angebot-deals') . '"><ul>';
+        echo '<li><a href="' . esc_url(get_post_type_archive_link(Angebot_Deals_Deal_CPT::POST_TYPE)) . '">' . esc_html__('All Deals', 'angebot-deals') . '</a></li>';
         foreach ($terms as $term) {
             printf(
                 '<li><a href="%s">%s</a></li>',

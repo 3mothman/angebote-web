@@ -20,7 +20,7 @@ final class Angebot_Deals_QR_Code
 
     public static function add_rewrite(): void
     {
-        add_rewrite_rule('^gutschein/([a-f0-9]+)/?', 'index.php?angebot_voucher_token=$matches[1]', 'top');
+        add_rewrite_rule('^voucher/([a-f0-9]+)/?', 'index.php?angebot_voucher_token=$matches[1]', 'top');
     }
 
     public static function query_vars(array $vars): array
@@ -31,7 +31,7 @@ final class Angebot_Deals_QR_Code
 
     public static function redeem_url(string $token): string
     {
-        return home_url('/gutschein/' . rawurlencode($token) . '/');
+        return home_url('/voucher/' . rawurlencode($token) . '/');
     }
 
     public static function image_url(string $token, int $size = 200): string
@@ -56,7 +56,7 @@ final class Angebot_Deals_QR_Code
             esc_url($url),
             $size,
             $size,
-            esc_attr__('Gutschein QR-Code', 'angebot-deals')
+            esc_attr__('Voucher QR code', 'angebot-deals')
         );
     }
 

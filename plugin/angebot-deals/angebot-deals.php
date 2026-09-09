@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Angebot Deals
  * Plugin URI:        https://angebot.local
- * Description:       Deals-Plattform mit WooCommerce-Checkout, Gutscheinen, Merchant-Portal und QR-Einlösung.
+ * Description:       Deals platform with WooCommerce checkout, vouchers, merchant portal, and QR redemption.
  * Version:           1.0.0
  * Requires at least: 6.4
  * Requires PHP:      8.0
@@ -35,7 +35,7 @@ add_action('plugins_loaded', static function (): void {
     if (!class_exists('WooCommerce')) {
         add_action('admin_notices', static function (): void {
             echo '<div class="notice notice-error"><p>';
-            echo esc_html__('Angebot Deals benötigt WooCommerce. Bitte WooCommerce installieren und aktivieren.', 'angebot-deals');
+            echo esc_html__('Angebot Deals requires WooCommerce. Please install and activate WooCommerce.', 'angebot-deals');
             echo '</p></div>';
         });
         return;

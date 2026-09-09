@@ -20,13 +20,13 @@
       if (!span) return;
       const diff = end - now;
       if (diff <= 0) {
-        span.textContent = 'abgelaufen';
+        span.textContent = 'expired';
         return;
       }
       const d = Math.floor(diff / 86400000);
       const h = Math.floor((diff % 86400000) / 3600000);
       const m = Math.floor((diff % 3600000) / 60000);
-      span.textContent = d > 0 ? d + 'T ' + h + 'Std' : h + 'Std ' + m + 'Min';
+      span.textContent = d > 0 ? d + 'd ' + h + 'h' : h + 'h ' + m + 'm';
     });
   }
   tickCountdowns();
@@ -164,7 +164,7 @@
     if (!result) return;
     result.hidden = false;
     if (!json.success) {
-      result.innerHTML = '<p>' + (json.data?.message || 'Fehler') + '</p>';
+      result.innerHTML = '<p>' + (json.data?.message || 'Error') + '</p>';
       return;
     }
     const d = json.data;
@@ -172,10 +172,10 @@
       '<p><strong>' + d.deal_title + '</strong></p>' +
       '<p>Code: <code>' + d.code + '</code></p>' +
       '<p>Status: ' + d.status_label + '</p>' +
-      '<p>Kunde: ' + d.customer + '</p>' +
-      (d.expires_at ? '<p>Ablauf: ' + d.expires_at + '</p>' : '') +
+      '<p>Customer: ' + d.customer + '</p>' +
+      (d.expires_at ? '<p>Expires: ' + d.expires_at + '</p>' : '') +
       (d.can_redeem
-        ? '<button type="button" class="angebot-btn angebot-btn--primary" data-redeem="' + d.id + '">Einlösen</button>'
+        ? '<button type="button" class="angebot-btn angebot-btn--primary" data-redeem="' + d.id + '">Redeem</button>'
         : '');
 
     qs('[data-redeem]', result)?.addEventListener('click', async function () {

@@ -37,6 +37,7 @@ final class Angebot_Deals_Plugin
         Angebot_Deals_Location::register_hooks();
         Angebot_Deals_Admin::register_hooks();
         Angebot_Deals_QR_Code::register_hooks();
+        Angebot_Deals_Setup::register_hooks();
 
         add_action('init', [$this, 'maybe_upgrade']);
     }

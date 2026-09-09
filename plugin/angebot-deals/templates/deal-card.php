@@ -37,21 +37,21 @@ $count      = Angebot_Deals_Reviews::count($deal_id);
             </p>
         <?php endif; ?>
         <div class="angebot-deal-card__prices">
-            <span class="angebot-price-old"><?php echo esc_html(number_format((float) $data['original_price'], 2, ',', '.')); ?> €</span>
-            <span class="angebot-price-new"><?php echo esc_html(number_format((float) $data['deal_price'], 2, ',', '.')); ?> €</span>
+            <span class="angebot-price-old">£<?php echo esc_html(number_format((float) $data['original_price'], 2, '.', ',')); ?></span>
+            <span class="angebot-price-new">£<?php echo esc_html(number_format((float) $data['deal_price'], 2, '.', ',')); ?></span>
         </div>
         <?php if ($expires) : ?>
             <p class="angebot-countdown" data-expires="<?php echo esc_attr($expires); ?>T23:59:59">
-                <?php esc_html_e('Läuft ab in', 'angebot-deals'); ?> <span class="angebot-countdown__time">—</span>
+                <?php esc_html_e('Expires in', 'angebot-deals'); ?> <span class="angebot-countdown__time">—</span>
             </p>
         <?php endif; ?>
         <div class="angebot-deal-card__actions">
             <?php if ($remaining > 0 && $product_id) : ?>
                 <a class="angebot-btn angebot-btn--primary" href="<?php echo esc_url(wc_get_cart_url() . '?add-to-cart=' . $product_id); ?>">
-                    <?php esc_html_e('Kaufen', 'angebot-deals'); ?>
+                    <?php esc_html_e('Buy', 'angebot-deals'); ?>
                 </a>
             <?php else : ?>
-                <span class="angebot-btn angebot-btn--disabled"><?php esc_html_e('Ausverkauft', 'angebot-deals'); ?></span>
+                <span class="angebot-btn angebot-btn--disabled"><?php esc_html_e('Sold out', 'angebot-deals'); ?></span>
             <?php endif; ?>
             <a class="angebot-btn angebot-btn--ghost" href="<?php echo esc_url($permalink); ?>"><?php esc_html_e('Details', 'angebot-deals'); ?></a>
         </div>

@@ -19,5 +19,5 @@ function angebot_deal_buy_url(int $deal_id): string
 
 function angebot_format_price(float $price): string
 {
-    return number_format($price, 2, ',', '.') . ' €';
+    return '£' . number_format($price, 2, '.', ',');
 }

@@ -24,7 +24,7 @@ get_header();
         </div>
         <?php the_posts_pagination(); ?>
     <?php else : ?>
-        <p><?php esc_html_e('Nichts gefunden.', 'angebot'); ?></p>
+        <p><?php esc_html_e('Nothing found.', 'angebot'); ?></p>
     <?php endif; ?>
 </div>
 

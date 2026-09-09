@@ -24,7 +24,7 @@ final class Angebot_Deals_Merchant_Role
             return;
         }
 
-        // Merchants: keep Deals + Gutscheine + Profil, hide the rest.
+        // Merchants: keep Deals + Vouchers + Profile, hide the rest.
         remove_menu_page('index.php');
         remove_menu_page('edit.php');
         remove_menu_page('upload.php');
@@ -53,7 +53,7 @@ final class Angebot_Deals_Merchant_Role
 
         $role = get_role(self::ROLE);
         if (!$role) {
-            add_role(self::ROLE, __('Anbieter / Merchant', 'angebot-deals'), $caps);
+            add_role(self::ROLE, __('Merchant', 'angebot-deals'), $caps);
         } else {
             foreach ($caps as $cap => $grant) {
                 if ($grant) {
