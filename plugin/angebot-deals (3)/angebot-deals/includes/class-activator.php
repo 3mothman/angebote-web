@@ -1,0 +1,86 @@
+<?php
+declare(strict_types=1);
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+final class Angebot_Deals_Activator
+{
+    public static function activate(): void
+    {
+        self::create_voucher_table();
+        self::create_reviews_table();
+        Angebot_Deals_Merchant_Role::register_role();
+        Angebot_Deals_Deal_CPT::register();
+        Angebot_Deals_Legal_Pages::maybe_create_pages();
+        add_option('angebot_brand_name', 'Highbridge');
+        flush_rewrite_rules();
+        update_option('angebot_deals_version', ANGEBOT_DEALS_VERSION);
+    }
+
+    public static function create_voucher_table(): void
+    {
+        global $wpdb;
+
+        $table   = $wpdb->prefix . 'angebot_vouchers';
+        $charset = $wpdb->get_charset_collate();
+
+        $sql = "CREATE TABLE {$table} (
+            id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            code VARCHAR(64) NOT NULL,
+            deal_id BIGINT UNSIGNED NOT NULL,
+            product_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+            order_id BIGINT UNSIGNED NOT NULL,
+            order_item_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+            customer_email VARCHAR(191) NOT NULL,
+            customer_name VARCHAR(191) NOT NULL DEFAULT '',
+            merchant_user_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+            status VARCHAR(20) NOT NULL DEFAULT 'active',
+            expires_at DATETIME NULL,
+            redeemed_at DATETIME NULL,
+            redeemed_by BIGINT UNSIGNED NOT NULL DEFAULT 0,
+            qr_token VARCHAR(64) NOT NULL DEFAULT '',
+            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (id),
+            UNIQUE KEY code (code),
+            UNIQUE KEY qr_token (qr_token),
+            KEY deal_id (deal_id),
+            KEY order_id (order_id),
+            KEY status (status),
+            KEY merchant_user_id (merchant_user_id),
+            KEY customer_email (customer_email)
+        ) {$charset};";
+
+        require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+        dbDelta($sql);
+    }
+
+    public static function create_reviews_table(): void
+    {
+        global $wpdb;
+
+        $table   = $wpdb->prefix . 'angebot_reviews';
+        $charset = $wpdb->get_charset_collate();
+
+        $sql = "CREATE TABLE {$table} (
+            id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            deal_id BIGINT UNSIGNED NOT NULL,
+            user_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+            author_name VARCHAR(191) NOT NULL,
+            author_email VARCHAR(191) NOT NULL DEFAULT '',
+            rating TINYINT UNSIGNED NOT NULL,
+            title VARCHAR(191) NOT NULL DEFAULT '',
+            content TEXT NOT NULL,
+            status VARCHAR(20) NOT NULL DEFAULT 'pending',
+            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (id),
+            KEY deal_id (deal_id),
+            KEY status (status),
+            KEY rating (rating)
+        ) {$charset};";
+
+        require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+        dbDelta($sql);
+    }
+}
